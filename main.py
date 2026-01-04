@@ -1,11 +1,12 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
-from PIL import Image
+from PIL import Image, ImageEnhance
 import io
 
-app = FastAPI()
+app = FastAPI(title="Image Upscaler API")
 
+# CORS for frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -14,16 +15,10 @@ app.add_middleware(
 )
 
 @app.get("/")
-def root():
-    return {"message": "Upscaler API Ready!", "endpoint": "/upscale"}
+async def root():
+    return {"message": "Upscaler API Live!", "docs": "/docs", "upload": "/upscale"}
 
 @app.post("/upscale")
 async def upscale_image(file: UploadFile = File(...)):
-    # Read file
-    contents = await file.read()
-    
-    # Open image
-    image = Image.open(io.BytesIO(contents)).convert('RGB')
-    
-    # 4x upscale
-    width
+    # Read uploaded file
+    contents
